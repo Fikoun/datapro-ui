@@ -11,15 +11,15 @@ import Dashboard from './dashboard';
 
 export default function Home({ stations }) {
   return (
-    <Dashboard />
+      <Dashboard />
   )
 }
 
-export async function getServerSideProps() {
-  const stations = await fetchQuery('data-stations')
-  return {
-    props: {
-      stations
-    }
-  }
-}
+// export async function getServerSideProps() {
+//   const stations = await fetchQuery('data-stations')
+//   return {
+//     props: {
+//       stations
+//     }
+//   }
+// }

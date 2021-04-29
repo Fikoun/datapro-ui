@@ -1,6 +1,8 @@
-import { Children, Fragment } from 'react'
+import { Fragment } from 'react'
+import { useRouter } from "next/router";
+
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { BellIcon, LoginIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 
 const navigation = ['Measurements', 'Users', 'About']
@@ -10,7 +12,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const Navbar = ({ header, children }) => {
+export const Navbar = ({ children }) => {
+  const router = useRouter();
+
   return (
     <div>
       <Disclosure as="nav" className="bg-gray-800">
@@ -22,23 +26,25 @@ export const Navbar = ({ header, children }) => {
                   <Link href="/">
                     <a className="flex-shrink-0">
                       <img
-                        className="h-8 w-8"
-                        src="https://storage.googleapis.com/labrulez-bucket-strapi-h3hsga3/author/Logo-Ceitec_s.jpg"
+                        className="h-10 w-10"
+                        src="/favicon.ico"
                         alt="Ceitec"
                       />
                     </a>
                   </Link>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item, itemIdx) =>
-                        itemIdx === 0 ? (
-                          <Link href={item.toLocaleLowerCase()}>
+                      {navigation.map((item) => {
+                        const lower = "/"+item.toLocaleLowerCase();
+                        console.log({lower, p: router.pathname})
+                        return lower === router.pathname ? (
+                          <Link href={lower}>
                             <a className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
                               {item}
                             </a>
                           </Link>
                         ) : (
-                          <Link href={item.toLocaleLowerCase()}>
+                          <Link href={lower}>
                             <a
                               key={item}
                               href="#"
@@ -48,7 +54,7 @@ export const Navbar = ({ header, children }) => {
                             </a>
                           </Link>
                         )
-                      )}
+                      })}
                     </div>
                   </div>
                 </div>
@@ -173,16 +179,7 @@ export const Navbar = ({ header, children }) => {
         )}
       </Disclosure>
 
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">{header}</h1>
-        </div>
-      </header>
-      <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          {children}
-        </div>
-      </main>
+      {children}
     </div>
   )
 }

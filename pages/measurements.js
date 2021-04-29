@@ -1,9 +1,9 @@
 import Page from '../components/page';
 import Station from '../components/station';
 
-export default function Dashboard({ stations }) {
+export default function Measurements({ stations }) {
   return (
-    <Page header="Dashboard">
+    <Page header="Measurements">
       <Station />
     </Page>
   )
