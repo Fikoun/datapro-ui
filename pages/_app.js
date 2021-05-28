@@ -5,9 +5,10 @@ import { Navbar } from '../components/navbar'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Navbar>
+    <main>
+      <Navbar />
       <Component {...pageProps} />
-    </Navbar>
+    </main>
   );
 }
 

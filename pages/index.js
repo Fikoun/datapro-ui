@@ -1,9 +1,7 @@
 import Head from 'next/head'
 
-import styles from '../styles/Home.module.css'
 import { Disclosure } from "@headlessui/react";
 
-import { fetchQuery } from '../utils'
 import { Navbar } from '../components/navbar';
 import Dashboard from './dashboard';
 
@@ -16,7 +14,7 @@ export default function Home({ stations }) {
 }
 
 // export async function getServerSideProps() {
-//   const stations = await fetchQuery('data-stations')
+//   const stations = await getQuery('data-stations')
 //   return {
 //     props: {
 //       stations
