@@ -8,10 +8,8 @@ import DashboardContext from "../contexts/dashboard-context";
 
 // Remake
 export default function StationDetail(props) {
-
     const {detailStation, setDetailStation, reload} = useContext(DashboardContext)
-    const [station, setStation] = useState(detailStation)
-    const { name, state, id } = station;
+    const { name, state, id } = detailStation;
 
     // Station Commands
     const reloadStation = async () => {
