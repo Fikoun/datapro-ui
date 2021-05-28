@@ -15,12 +15,12 @@ export default function StationDetail(props) {
     const reloadStation = async () => {
         const station = await getQuery('data-stations', id)
         reload();
-        setStation(station)
+        setDetailStation(station)
     }
     const acceptStation = async () => {
         const station = await updateQuery('data-stations', id, { state: "online" })
         reload();
-        setStation(station)
+        setDetailStation(station)
     }
     const stopStation = async () => {
         //const station = await commandQuery('data-stations', id, {state: "online"})
@@ -29,7 +29,7 @@ export default function StationDetail(props) {
     const listStation = async () => {
         const station = await getQuery('data-stations-list')
         reload();
-        setStation(station)
+        setDetailStation(station)
     }
 
     let pingInterval;
