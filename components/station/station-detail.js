@@ -12,15 +12,14 @@ export default function StationDetail(props) {
     const { name, state, id } = detailStation;
 
     // Station Commands
-    const reloadStation = async () => {
-        const station = await getQuery('data-stations', id)
-        reload();
-        setDetailStation(station)
-    }
+    // const reloadStation = async () => {
+    //     const station = await getQuery('data-stations', id)
+    //     reload();
+    //     setDetailStation(station)
+    // }
     const acceptStation = async () => {
         const station = await updateQuery('data-stations', id, { state: "online" })
         reload();
-        setDetailStation(station)
     }
     const stopStation = async () => {
         //const station = await commandQuery('data-stations', id, {state: "online"})
@@ -29,12 +28,11 @@ export default function StationDetail(props) {
     const listStation = async () => {
         const station = await getQuery('data-stations-list')
         reload();
-        setDetailStation(station)
     }
 
     let pingInterval;
     useEffect(() => {
-        pingInterval = setInterval(reloadStation, 2000);
+        pingInterval = setInterval(reload, 2000);
         return () => {
             clearInterval(pingInterval)
         }
