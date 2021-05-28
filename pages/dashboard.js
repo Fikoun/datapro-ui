@@ -20,7 +20,7 @@ function Dashboard(props) {
 
   return (
     <Page header="Control Panel">
-      <Context.Provider value={{detailStation, setDetailStation, reload}}>
+      <Context.Provider value={{detailStation, setDetailStation, reload: stationsReload}}>
 
       <div className="flex flex-wrap h-screen px-2">
         <div className="max-w-xs flex-1 shadow h-screen rounded-md py-2 bg-gray-50">
