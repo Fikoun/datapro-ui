@@ -1,19 +1,21 @@
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { CogIcon } from '@heroicons/react/outline'
 import { getQuery, updateQuery } from "../../auth";
 import State from "../utils/state";
+import DashboardContext from "../contexts/dashboard-context";
 
 // Remake
-export default function Station({ station, clickHandle}) {
+export default function Station({ station, clickHandle }) {
 
     // context -> stanice (data, handles)
     const {name, state} = station;
-
+    const {detailStation, setDetailStation, reload} = useContext(DashboardContext)
+    
     const click = () => {
         console.log("Switchin to", station);
-        clickHandle(station)
+        setDetailStation(station)
     }
 
     return (

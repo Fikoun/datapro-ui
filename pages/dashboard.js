@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Page from '../components/page';
 import Station from '../components/station/station';
 import StationDetail from '../components/station/station-detail';
 import { CogIcon, SwitchHorizontalIcon } from "@heroicons/react/outline";
 import { getQuery } from "../auth";
+import Context from "../components/contexts/dashboard-context";
 
 function Dashboard(props) {
 
   const [stations, setStations] = useState([])
   const [detailStation, setDetailStation] = useState(null)
+  const context = useContext(Context)
 
   const stationsReload = async () => {
     const stations = await getQuery('data-stations')
@@ -18,6 +20,8 @@ function Dashboard(props) {
 
   return (
     <Page header="Control Panel">
+      <Context.Provider value={{detailStation, setDetailStation, reload}}>
+
       <div className="flex flex-wrap h-screen px-2">
         <div className="max-w-xs flex-1 shadow h-screen rounded-md py-2 bg-gray-50">
           <div className="text-center pt-2">
@@ -29,8 +33,6 @@ function Dashboard(props) {
           {stations.map((station, key) =>
             <Station
               key={key}
-              clickHandle={setDetailStation}
-              reloadHandle={stationsReload}
               station={station} />)}
         </div>
 
@@ -47,6 +49,7 @@ function Dashboard(props) {
 
 
       {/* <Station /> */}
+      </Context.Provider>
     </Page>
   )
 }
