@@ -14,7 +14,7 @@ export default function Station({ station, clickHandle }) {
     const {detailStation, setDetailStation, reload} = useContext(DashboardContext)
     
     const click = () => {
-        console.log("Switchin to", station);
+        console.log("Switching to", station);
         setDetailStation(station)
     }
 

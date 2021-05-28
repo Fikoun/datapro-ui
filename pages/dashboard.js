@@ -18,37 +18,35 @@ function Dashboard(props) {
   }
   useEffect(stationsReload, [])
 
+  console.log({detailStation});
+
   return (
     <Page header="Control Panel">
-      <Context.Provider value={{detailStation, setDetailStation, reload: stationsReload}}>
+      <Context.Provider value={{ detailStation, setDetailStation, reload: stationsReload }}>
 
-      <div className="flex flex-wrap h-screen px-2">
-        <div className="max-w-xs flex-1 shadow h-screen rounded-md py-2 bg-gray-50">
-          <div className="text-center pt-2">
-            <button onClick={() => stationsReload() && setDetailStation()} className="btn">
-              <SwitchHorizontalIcon className="h-6 w-5 mr-2" /> Reload
+        <div className="flex flex-wrap h-screen px-2">
+          <div className="max-w-xs flex-1 shadow h-screen rounded-md py-2 bg-gray-50">
+            <div className="text-center pt-2">
+              <button onClick={() => stationsReload() && setDetailStation()} className="btn">
+                <SwitchHorizontalIcon className="h-6 w-5 mr-2" /> Reload
             </button>
-            <hr className="my-3 mx-3" />
+              <hr className="my-3 mx-3" />
+            </div>
+            {stations.map((station, key) =>
+              <Station
+                key={key}
+                station={station} />)}
           </div>
-          {stations.map((station, key) =>
-            <Station
-              key={key}
-              station={station} />)}
-        </div>
 
-        <div className="flex-1 pl-5">
-          <div className="h-screen shadow rounded-md py-2 bg-gray-50">
-            {detailStation &&
-              <StationDetail
-                station={detailStation}
-                reloadHandle={stationsReload} />
-            }
+          <div className="flex-1 pl-5">
+            <div className="h-screen shadow rounded-md py-2 bg-gray-50">
+              { detailStation && <StationDetail /> }
+            </div>
           </div>
         </div>
-      </div>
 
 
-      {/* <Station /> */}
+        {/* <Station /> */}
       </Context.Provider>
     </Page>
   )

@@ -4,22 +4,24 @@ import { Dialog } from "@headlessui/react";
 import { CogIcon } from '@heroicons/react/outline'
 import { getQuery, updateQuery } from "../../auth";
 import State from "../utils/state";
+import DashboardContext from "../contexts/dashboard-context";
 
 // Remake
 export default function StationDetail(props) {
 
-    const [station, setStation] = useState(props.station)
     const { name, state, id } = station;
+    const {detailStation, setDetailStation, reload} = useContext(DashboardContext)
+    const [station, setStation] = useState(detailStation)
 
     // Station Commands
     const reloadStation = async () => {
         const station = await getQuery('data-stations', id)
-        props.reloadHandle();
+        reload();
         setStation(station)
     }
     const acceptStation = async () => {
         const station = await updateQuery('data-stations', id, { state: "online" })
-        props.reloadHandle();
+        reload();
         setStation(station)
     }
     const stopStation = async () => {
@@ -28,7 +30,7 @@ export default function StationDetail(props) {
     }
     const listStation = async () => {
         const station = await getQuery('data-stations-list')
-        props.reloadHandle();
+        reload();
         setStation(station)
     }
 
