@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Dialog } from "@headlessui/react";
 import { CogIcon } from '@heroicons/react/outline'
 import { getQuery, updateQuery } from "../../auth";
