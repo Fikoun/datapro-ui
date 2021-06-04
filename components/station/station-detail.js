@@ -1,14 +1,15 @@
 
 import { useState, useEffect, useContext } from "react";
 import { Dialog } from "@headlessui/react";
-import { CogIcon } from '@heroicons/react/outline'
+import { CogIcon, CodeIcon } from '@heroicons/react/outline'
 import { getQuery, updateQuery } from "../../auth";
 import State from "../utils/state";
 import DashboardContext from "../contexts/dashboard-context";
 
 // Remake
 export default function StationDetail(props) {
-    const {detailStation, setDetailStation, reload} = useContext(DashboardContext)
+    const { detailStation, setDetailStation, reload } = useContext(DashboardContext)
+    const [portList, setPortList] = useState([])
     const { name, state, id, socketId } = detailStation;
 
     // Station Commands
@@ -26,7 +27,9 @@ export default function StationDetail(props) {
         //setStation(station)
     }
     const listStation = async () => {
-        const station = await getQuery('data-stations-list', socketId)
+        // TODO: Name the better
+        const portListResponse = await getQuery('data-stations-list', socketId)
+        setPortList(portListResponse.list)
         reload();
     }
 
@@ -61,7 +64,7 @@ export default function StationDetail(props) {
                     <button onClick={listStation} className="btn btn-blue">
                         <span>List Ports</span>
                     </button>
-                    <button onClick={() => {}} className="btn">
+                    <button onClick={() => { }} className="btn">
                         <CogIcon className="h-6 w-5 mr-2" />
                         <span>Configuration</span>
                     </button>
@@ -73,6 +76,15 @@ export default function StationDetail(props) {
         }
 
         <hr className="m-4" />
+
+        { portList.length > 0 &&
+            <div className="flex-center justify-center max-w-md ml-auto p-4">
+                {portList.map((port) =>
+                    <button onClick={() => { }} className="btn">
+                        <CodeIcon className="h-6 w-5 mr-2" />
+                        <span>{ port }</span>
+                    </button>)}
+            </div>}
 
     </>)
 }
