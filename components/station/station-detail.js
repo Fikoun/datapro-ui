@@ -81,7 +81,7 @@ export default function StationDetail(props) {
             <h3 className="p-0 pl-10 my-3">Available ports:</h3>
             <div className="flex-center justify-center flex-wrap">
                 {portList.map((port) =>
-                    <button onClick={() => { }} className="btn mt-2">
+                    <button onClick={() => { }} className="btn m-2">
                         <CodeIcon className="h-6 w-5 mr-2" />
                         <span>{port.name} [<i>{port.path}</i>] </span>
                     </button>)}
