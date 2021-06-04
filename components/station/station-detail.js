@@ -9,7 +9,7 @@ import DashboardContext from "../contexts/dashboard-context";
 // Remake
 export default function StationDetail(props) {
     const {detailStation, setDetailStation, reload} = useContext(DashboardContext)
-    const { name, state, id } = detailStation;
+    const { name, state, id, socketId } = detailStation;
 
     // Station Commands
     // const reloadStation = async () => {
@@ -26,7 +26,7 @@ export default function StationDetail(props) {
         //setStation(station)
     }
     const listStation = async () => {
-        const station = await getQuery('data-stations-list')
+        const station = await getQuery('data-stations-list', socketId)
         reload();
     }
 
