@@ -7,37 +7,45 @@ import State from "../utils/state";
 import DashboardContext from "../contexts/dashboard-context";
 
 // Remake
-export default function StationDetail(props) {
-    const { detailStation, setDetailStation, reload } = useContext(DashboardContext)
+export default function StationDetail() {
+    const { getDetailStation, setDetailStation, reloadStations } = useContext(DashboardContext)
+    const { name, state, id, socketId } = getDetailStation();
+    let pingInterval = false;
+
+
     const [portList, setPortList] = useState([])
-    const { name, state, id, socketId } = detailStation;
 
     // Station Commands
-    // const reloadStation = async () => {
-    //     const station = await getQuery('data-stations', id)
-    //     reload();
-    //     setDetailStation(station)
-    // }
+    const reloadDetail = async () => {
+        console.log(getDetailStation());
+        //if (detailStation.name !== station.name) return;
+
+        const response = await getQuery('data-stations', id)
+        //setDetailStation(response)
+    }
+
     const acceptStation = async () => {
-        const station = await updateQuery('data-stations', id, { state: "online" })
-        reload();
+        await updateQuery('data-stations', id, { state: "online" })
+        reloadDetail();
+        reloadStations();
     }
     const stopStation = async () => {
         //const station = await commandQuery('data-stations', id, {state: "online"})
         //setStation(station)
     }
-    const listStation = async () => {
-        // TODO: Name the better
-        const portListResponse = await getQuery('data-stations-list', socketId)
-        setPortList(portListResponse.list)
-        reload();
+
+    const listPorts = async () => {
+        const response = await getQuery('data-stations-list', socketId)
+        setPortList(response.list)
+        reloadDetail();
     }
 
-    let pingInterval;
     useEffect(() => {
-        pingInterval = setInterval(reload, 2000);
+        pingInterval = setInterval(reloadDetail, 2000);
         return () => {
+            console.log("clearing");
             clearInterval(pingInterval)
+            pingInterval = false;
         }
     }, [])
 
@@ -52,16 +60,16 @@ export default function StationDetail(props) {
         <hr className="m-4" />
 
         {state == "offline" ? <p className="p-3 m-2">
-            ... station hasn't been started or cannot connect
+            Station hasn't been started or cannot connect! (..pinging for updates)
         </p> :
             <div className="flex-center justify-between max-w-md ml-auto p-4">
                 {state === "unknown" && (
-                    <button onClick={acceptStation} className="btn btn-green">
+                    <button onClick={acceptStation} className="btn btn-green self-end">
                         <span>Accept station</span>
                     </button>
                 )}
                 {state == "online" && (<>
-                    <button onClick={listStation} className="btn btn-blue">
+                    <button onClick={listPorts} className="btn btn-blue">
                         <span>List Ports</span>
                     </button>
                     <button onClick={() => { }} className="btn">
@@ -77,7 +85,7 @@ export default function StationDetail(props) {
 
         <hr className="m-4" />
 
-        { portList.length > 0 && <>
+        {portList.length > 0 && <>
             <h3 className="p-0 pl-10 my-3">Available ports:</h3>
             <div className="flex-center justify-center flex-wrap">
                 {portList.map((port) =>

@@ -7,14 +7,14 @@ import State from "../utils/state";
 import DashboardContext from "../contexts/dashboard-context";
 
 // Remake
-export default function Station({ station, clickHandle }) {
+export default function Station({ station }) {
 
     // context -> stanice (data, handles)
     const {name, state} = station;
-    const {detailStation, setDetailStation, reload} = useContext(DashboardContext)
+    const {setDetailStation} = useContext(DashboardContext)
     
     const click = () => {
-        console.log("Switching to", station);
+        console.log("Switching to detail of ", name);
         setDetailStation(station)
     }
 

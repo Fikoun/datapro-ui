@@ -32,17 +32,17 @@ export const Navbar = ({ children }) => {
                   </Link>
                   <div className="hide-sm-block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item) => {
+                      {navigation.map((item, key) => {
                         const lower = "/"+item.toLocaleLowerCase();
                         console.log({lower, p: router.pathname})
                         return lower === router.pathname ? (
-                          <Link href={lower}>
+                          <Link href={lower} key={key}>
                             <a className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
                               {item}
                             </a>
                           </Link>
                         ) : (
-                          <Link href={lower}>
+                          <Link href={lower} key={key}>
                             <a
                               key={item}
                               href="#"
